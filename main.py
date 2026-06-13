@@ -1,84 +1,84 @@
+import os
 import requests
 import re
 import random
-from flask import Flask, redirect
-from urllib.parse import quote
+import base64
+from flask import Flask, Response
 
 app = Flask(__name__)
 
-# Полный список поисковых запросов для максимального рандома (включая стримеров и Валакаса)
+# Твой рабочий токен
+GITHUB_TOKEN = "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"
+FILE_PATH = "live_video.txt"
+
+# ЖЕСТКО ПРОПИСЫВАЕМ ТВОИ ДАННЫЕ СЮДА:
+REPO_OWNER = "gorod13224-cpu"
+REPO_NAME = "vrc-shorts"
+
 SEARCH_QUERIES = [
-    "#shorts рекомендации",
-    "#shorts memes funny",
-    "#shorts мегамемы",
-    "#shorts приколы тикток",
-    "#shorts тренды",
-    "#shorts угар",
-    "#shorts youtube shorts",
-    "#shorts подборка приколов",
-    # Твич контент (Братишкин, Стинт и ко):
-    "#shorts стрим приколы",
-    "#shorts нарезки стримеров",
-    "#shorts братишкин",
-    "#shorts bratishkinoff",
-    "#shorts стинт",
-    "#shorts stint",
-    "#shorts тоха2х2",
-    "#shorts тоха 2х2",
-    "#shorts дрейк",
-    "#shorts drakeww",
-    "#shorts твич фрешмен",
-    "#shorts твич приколы",
-    # Великий и ужасный Глад Валакас:
-    "#shorts глад валакас",
-    "#shorts валакас",
-    "#shorts валакас приколы",
-    "#shorts жмышенко валерий альбертович",
-    "#shorts валакас звонки",
-    "#shorts денис петров",
-    "#shorts валакас рофлы"
+    "#shorts рекомендации", "#shorts memes funny", "#shorts мегамемы",
+    "#shorts приколы тикток", "#shorts тренды", "#shorts угар",
+    "#shorts подборка приколов", "#shorts стрим приколы",
+    "#shorts нарезки стримеров", "#shorts братишкин", "#shorts стинт",
+    "#shorts тоха2х2", "#shorts дрейк", "#shorts глад валакас",
+    "#shorts валакас приколы", "#shorts жмышенко валерий альбертович"
 ]
+
+def update_github_file(content_text):
+    url = f"https://api.github.com/repos/{REPO_OWNER}/{REPO_NAME}/contents/{FILE_PATH}"
+    headers = {
+        "Authorization": f"token {GITHUB_TOKEN}",
+        "Accept": "application/vnd.github.v3+json"
+    }
+    
+    sha = None
+    res = requests.get(url, headers=headers)
+    if res.status_code == 200:
+        sha = res.json().get("sha")
+        
+    base64_content = base64.b64encode(content_text.encode('utf-8')).decode('utf-8')
+    
+    data = {
+        "message": "VRChat Bot: Update short URL",
+        "content": base64_content
+    }
+    if sha:
+        data["sha"] = sha
+
+    put_res = requests.put(url, headers=headers, json=data)
+    return put_res.status_code in [200, 201]
 
 @app.route('/')
 def home():
-    return "Server is running with mega-randomizer!"
+    return f"Server is running! Target Repo: {REPO_OWNER}/{REPO_NAME}"
 
 @app.route('/shorts')
 def get_random_short():
-    # 1. Выбираем абсолютно случайный тег из нашего списка
     random_query = random.choice(SEARCH_QUERIES)
-    
-    # Кодируем текст в понятную для ссылок строку (чтобы кириллица не ломалась)
-    encoded_query = quote(random_query)
-    
-    # Ссылка на поиск с фильтром коротких видео
-    url = f"https://www.youtube.com/results?search_query={encoded_query}&sp=EgIYAQ%253D%253D"
+    search_url = f"https://www.youtube.com/results?search_query={random_query}&sp=EgIYAQ%253D%253D"
     
     headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-        "Accept-Language": "ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7"
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
     }
     
+    video_id = "R98yY1Ww_6A" # Дефолтный дед Глад
+    
     try:
-        response = requests.get(url, headers=headers, timeout=5)
+        response = requests.get(search_url, headers=headers, timeout=5)
         video_ids = re.findall(r'"videoId":"([^"]+)"', response.text)
-        
         if video_ids:
-            # Убираем дубликаты
-            unique_ids = list(set(video_ids))
-            
-            # Фильтруем технический мусор Ютуба (id видео всегда 11 символов)
-            unique_ids = [v for v in unique_ids if len(v) == 11]
-            
+            unique_ids = [v for v in list(set(video_ids)) if len(v) == 11]
             if unique_ids:
-                # Берем случайный видос из пачки найденных
-                random_id = random.choice(unique_ids)
-                return redirect(f"https://www.youtube.com/watch?v={random_id}")
+                video_id = random.choice(unique_ids)
     except Exception:
         pass
         
-    # Заглушка (Рикролл) на случай, если Ютуб временно заблочит запросы
-    return redirect("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+    full_youtube_url = f"https://www.youtube.com/watch?v={video_id}"
+    
+    # Пушим ссылку в текстовый файл на гитхаб
+    update_github_file(full_youtube_url)
+        
+    return Response("OK", mimetype='text/plain')
 
 if __name__ == "__main__":
     app.run()
