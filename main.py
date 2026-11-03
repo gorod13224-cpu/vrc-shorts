@@ -1,10 +1,31 @@
 import requests
 import re
 import random
-from flask import Flask, redirect
+from flask import Flask, abort, jsonify, redirect, request
 from urllib.parse import quote
+from catalog import CATALOG_VERSION, VIDEO_ID, load_registry
 
 app = Flask(__name__)
+CLIP_IDS = tuple(load_registry())
+
+
+@app.after_request
+def prevent_feed_caching(response):
+    if request.path in ("/catalog.json", "/shorts") or request.path.startswith("/clip/"):
+        response.headers["Cache-Control"] = "no-store"
+    return response
+
+
+@app.route('/catalog.json')
+def catalog():
+    return jsonify(version=CATALOG_VERSION, count=len(CLIP_IDS))
+
+
+@app.route('/clip/<int:slot>')
+def clip(slot):
+    if slot >= len(CLIP_IDS):
+        abort(404)
+    return redirect(f"https://www.youtube.com/watch?v={CLIP_IDS[slot]}", code=302)
 
 # Полный список поисковых запросов для максимального рандома (включая стримеров и Валакаса)
 SEARCH_QUERIES = [
@@ -68,7 +89,7 @@ def get_random_short():
             unique_ids = list(set(video_ids))
             
             # Фильтруем технический мусор Ютуба (id видео всегда 11 символов)
-            unique_ids = [v for v in unique_ids if len(v) == 11]
+            unique_ids = [v for v in unique_ids if VIDEO_ID.fullmatch(v)]
             
             if unique_ids:
                 # Берем случайный видос из пачки найденных
