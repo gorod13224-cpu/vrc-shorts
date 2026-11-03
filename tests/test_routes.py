@@ -80,9 +80,9 @@ class FeedRouteTests(unittest.TestCase):
         document = {"clips": ["AAAAAAAAAAA", "BBBBBBBBBBB", "CCCCCCCCCCC"],
                     "clip_topics": {"BBBBBBBBBBB": ["q0", "q1"], "AAAAAAAAAAA": ["q1"]}}
         result = main.build_topic_catalog(document, [Topic("q0", "one", "one"), Topic("q1", "two", "two"), Topic("q2", "empty", "empty")])
-        self.assertEqual(result, [{"id": "q0", "name": "one", "clips": [1]},
-                                  {"id": "q1", "name": "two", "clips": [0, 1]},
-                                  {"id": "q2", "name": "empty", "clips": []}])
+        self.assertEqual(result, [{"id": "q0", "name": "one", "category": "Другие", "clips": [1]},
+                                  {"id": "q1", "name": "two", "category": "Другие", "clips": [0, 1]},
+                                  {"id": "q2", "name": "empty", "category": "Другие", "clips": []}])
 
 
 if __name__ == "__main__":

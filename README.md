@@ -121,3 +121,5 @@ python -m unittest discover -s tests -v
 
 The tests use Flask's test client and mocked YouTube search responses. They do not
 download videos, make external network requests, or contact the production service.
+
+Topic definitions may include a Russian `category` label. Edit `feed_sources.json` to organize phone categories; keep topic IDs stable. The phone supports selecting multiple tags or a whole category and combines their clips.

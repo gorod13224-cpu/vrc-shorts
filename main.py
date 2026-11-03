@@ -9,7 +9,7 @@ from refresh_catalog import load_config
 app = Flask(__name__)
 def build_topic_catalog(document, topics):
     return [
-        {"id": topic.id, "name": topic.name,
+        {"id": topic.id, "name": topic.name, "category": topic.category,
          "clips": [slot for slot, clip in enumerate(document["clips"])
                    if topic.id in document.get("clip_topics", {}).get(clip, [])]}
         for topic in topics

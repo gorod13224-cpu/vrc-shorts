@@ -43,6 +43,7 @@ class Topic:
     id: str
     name: str
     query: str
+    category: str = "Другие"
 
 
 @dataclass(frozen=True)
@@ -74,7 +75,10 @@ def load_config(path=CONFIG_PATH):
         if (not isinstance(item, dict) or not isinstance(item.get("id"), str) or not TOPIC_ID.fullmatch(item["id"])
                 or any(not isinstance(item.get(key), str) or not item[key].strip() or len(item[key]) > 160 for key in ("name", "query"))):
             raise RefreshError("Each topic needs a stable qN id, nonempty name and search query (max 160 characters)")
-        topics.append(Topic(item["id"], item["name"].strip(), item["query"].strip()))
+        category = item.get("category", "Другие")
+        if not isinstance(category, str) or not category.strip() or len(category) > 64:
+            raise RefreshError("Topic category must be nonempty (max 64 characters)")
+        topics.append(Topic(item["id"], item["name"].strip(), item["query"].strip(), category.strip()))
     if len({topic.id for topic in topics}) != len(topics):
         raise RefreshError("Topic IDs must be unique")
     count, limit = data.get("queries_per_run"), data.get("max_additions")
