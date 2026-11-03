@@ -94,7 +94,7 @@ def select_queries(config, now):
 
 def select_topics(config, now):
     count = min(config.queries_per_run, len(config.topics))
-    start = (int(now // 3600) * count) % len(config.topics)
+    start = (int(now // 1800) * count) % len(config.topics)
     return [config.topics[(start + index) % len(config.topics)] for index in range(count)]
 
 

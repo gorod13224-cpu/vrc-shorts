@@ -2,7 +2,7 @@ name: Refresh Shorts catalog
 
 on:
   schedule:
-    - cron: '23 * * * *'
+    - cron: '23,53 * * * *'
   workflow_dispatch:
     inputs:
       full_scan:

@@ -210,7 +210,9 @@ class RefreshRegistryTests(unittest.TestCase):
         self.configure(["one", "two", "three"])
         config = load_config(self.config)
         self.assertEqual(select_queries(config, 0), ["one", "two"])
-        self.assertEqual(select_queries(config, 3600), ["three", "one"])
+        self.assertEqual(select_queries(config, 1799), ["one", "two"])
+        self.assertEqual(select_queries(config, 1800), ["three", "one"])
+        self.assertEqual(select_queries(config, 3600), ["two", "three"])
         self.configure(limit=21)
         with self.assertRaisesRegex(RefreshError, "max_additions"):
             load_config(self.config)

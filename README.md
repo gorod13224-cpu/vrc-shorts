@@ -43,7 +43,7 @@ need a backend deployment; existing history and shares retain their original IDs
 
 ## Automatic refresh
 
-`.github/workflows/refresh-catalog.yml` runs hourly at minute 23 (UTC) and supports
+`.github/workflows/refresh-catalog.yml` runs every 30 minutes at minutes 23 and 53 (UTC) and supports
 manual **Run workflow**. It runs tests, discovers Shorts, appends at most 20 new
 IDs, and commits only `clips.json` when entries or topic memberships change. The connected Vercel
 Git integration then deploys the committed registry. Actions needs to be enabled
@@ -54,7 +54,7 @@ project's Git/plan settings.
 
 The editable `feed_sources.json` contains the existing 27 search topics, queries per
 run (up to 8), maximum additions (up to 20), and the curated-source switch. Queries
-rotate each hour. Results from successful searches are interleaved to avoid filling
+rotate every 30 minutes. Results from successful searches are interleaved to avoid filling
 the whole update with the first topic. `#shorts` is added when a query omits it.
 Each topic has an explicit stable `id`, display `name` (the existing query without
 the common `#shorts` prefix), and `query`. Do not renumber or reuse IDs when editing
@@ -103,7 +103,7 @@ ones. A full catalog with no new associations reports `capacity_reached`; raisin
 the slot limit requires a matching client URL pool. Concurrent refresh
 runs are serialized. A competing Git push causes a normal push rejection rather
 than rebasing/remapping IDs or force-pushing; the next run starts from current main.
-GitHub schedules are best effort, so an exact hourly start time is not guaranteed.
+GitHub schedules are best effort, so an exact 30-minute start time is not guaranteed.
 Run results and source errors are visible in the Actions job summary.
 
 ## Deployment
