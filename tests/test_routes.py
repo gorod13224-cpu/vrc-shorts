@@ -18,6 +18,8 @@ class FeedRouteTests(unittest.TestCase):
         data = response.get_json()
         self.assertEqual((data["version"], data["count"]), (1, len(load_registry())))
         self.assertEqual([topic["id"] for topic in data["topics"]], [f"q{i}" for i in range(39)])
+        self.assertEqual(data["topics"][0]["name"], "\u0440\u0435\u043a\u043e\u043c\u0435\u043d\u0434\u0430\u0446\u0438\u0438")
+        self.assertEqual(data["topics"][37]["name"], "#OC")
         for topic in data["topics"]:
             self.assertTrue(topic["name"])
             self.assertEqual(topic["clips"], sorted(set(topic["clips"])))
