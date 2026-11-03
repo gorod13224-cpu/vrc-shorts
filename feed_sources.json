@@ -6,235 +6,235 @@
   "topics": [
     {
       "id": "q0",
-      "name": "Рекомендации",
+      "name": "СЂРµРєРѕРјРµРЅРґР°С†РёРё",
       "query": "#shorts СЂРµРєРѕРјРµРЅРґР°С†РёРё",
       "category": "Рекомендации"
     },
     {
       "id": "q1",
-      "name": "Смешные мемы",
+      "name": "memes funny",
       "query": "#shorts memes funny",
       "category": "Юмор и мемы"
     },
     {
       "id": "q2",
-      "name": "Мегамемы",
+      "name": "РјРµРіР°РјРµРјС‹",
       "query": "#shorts РјРµРіР°РјРµРјС‹",
       "category": "Юмор и мемы"
     },
     {
       "id": "q3",
-      "name": "Приколы ТикТока",
+      "name": "РїСЂРёРєРѕР»С‹ С‚РёРєС‚РѕРє",
       "query": "#shorts РїСЂРёРєРѕР»С‹ С‚РёРєС‚РѕРє",
       "category": "Юмор и мемы"
     },
     {
       "id": "q4",
-      "name": "Тренды",
+      "name": "С‚СЂРµРЅРґС‹",
       "query": "#shorts С‚СЂРµРЅРґС‹",
       "category": "Рекомендации"
     },
     {
       "id": "q5",
-      "name": "Угар",
+      "name": "СѓРіР°СЂ",
       "query": "#shorts СѓРіР°СЂ",
       "category": "Юмор и мемы"
     },
     {
       "id": "q6",
-      "name": "Короткие видео",
+      "name": "youtube shorts",
       "query": "#shorts youtube shorts",
       "category": "Рекомендации"
     },
     {
       "id": "q7",
-      "name": "Подборки приколов",
+      "name": "РїРѕРґР±РѕСЂРєР° РїСЂРёРєРѕР»РѕРІ",
       "query": "#shorts РїРѕРґР±РѕСЂРєР° РїСЂРёРєРѕР»РѕРІ",
       "category": "Юмор и мемы"
     },
     {
       "id": "q8",
-      "name": "Приколы со стримов",
+      "name": "СЃС‚СЂРёРј РїСЂРёРєРѕР»С‹",
       "query": "#shorts СЃС‚СЂРёРј РїСЂРёРєРѕР»С‹",
       "category": "Стримеры"
     },
     {
       "id": "q9",
-      "name": "Нарезки стримеров",
+      "name": "РЅР°СЂРµР·РєРё СЃС‚СЂРёРјРµСЂРѕРІ",
       "query": "#shorts РЅР°СЂРµР·РєРё СЃС‚СЂРёРјРµСЂРѕРІ",
       "category": "Стримеры"
     },
     {
       "id": "q10",
-      "name": "Братишкин",
+      "name": "Р±СЂР°С‚РёС€РєРёРЅ",
       "query": "#shorts Р±СЂР°С‚РёС€РєРёРЅ",
       "category": "Стримеры"
     },
     {
       "id": "q11",
-      "name": "Братишкин — дополнительные",
+      "name": "bratishkinoff",
       "query": "#shorts bratishkinoff",
       "category": "Стримеры"
     },
     {
       "id": "q12",
-      "name": "Стинт",
+      "name": "СЃС‚РёРЅС‚",
       "query": "#shorts СЃС‚РёРЅС‚",
       "category": "Стримеры"
     },
     {
       "id": "q13",
-      "name": "Стинт — дополнительные",
+      "name": "stint",
       "query": "#shorts stint",
       "category": "Стримеры"
     },
     {
       "id": "q14",
-      "name": "Тоха 2х2",
+      "name": "С‚РѕС…Р°2С…2",
       "query": "#shorts С‚РѕС…Р°2С…2",
       "category": "Стримеры"
     },
     {
       "id": "q15",
-      "name": "Тоха 2х2 — дополнительные",
+      "name": "С‚РѕС…Р° 2С…2",
       "query": "#shorts С‚РѕС…Р° 2С…2",
       "category": "Стримеры"
     },
     {
       "id": "q16",
-      "name": "Дрейк",
+      "name": "РґСЂРµР№Рє",
       "query": "#shorts РґСЂРµР№Рє",
       "category": "Стримеры"
     },
     {
       "id": "q17",
-      "name": "Дрейк — дополнительные",
+      "name": "drakeww",
       "query": "#shorts drakeww",
       "category": "Стримеры"
     },
     {
       "id": "q18",
-      "name": "Твич Фрешмен",
+      "name": "С‚РІРёС‡ С„СЂРµС€РјРµРЅ",
       "query": "#shorts С‚РІРёС‡ С„СЂРµС€РјРµРЅ",
       "category": "Стримеры"
     },
     {
       "id": "q19",
-      "name": "Приколы Твича",
+      "name": "С‚РІРёС‡ РїСЂРёРєРѕР»С‹",
       "query": "#shorts С‚РІРёС‡ РїСЂРёРєРѕР»С‹",
       "category": "Стримеры"
     },
     {
       "id": "q20",
-      "name": "Глад Валакас",
+      "name": "РіР»Р°Рґ РІР°Р»Р°РєР°СЃ",
       "query": "#shorts РіР»Р°Рґ РІР°Р»Р°РєР°СЃ",
       "category": "Стримеры"
     },
     {
       "id": "q21",
-      "name": "Валакас",
+      "name": "РІР°Р»Р°РєР°СЃ",
       "query": "#shorts РІР°Р»Р°РєР°СЃ",
       "category": "Стримеры"
     },
     {
       "id": "q22",
-      "name": "Приколы Валакаса",
+      "name": "РІР°Р»Р°РєР°СЃ РїСЂРёРєРѕР»С‹",
       "query": "#shorts РІР°Р»Р°РєР°СЃ РїСЂРёРєРѕР»С‹",
       "category": "Стримеры"
     },
     {
       "id": "q23",
-      "name": "Жмышенко Валерий Альбертович",
+      "name": "Р¶РјС‹С€РµРЅРєРѕ РІР°Р»РµСЂРёР№ Р°Р»СЊР±РµСЂС‚РѕРІРёС‡",
       "query": "#shorts Р¶РјС‹С€РµРЅРєРѕ РІР°Р»РµСЂРёР№ Р°Р»СЊР±РµСЂС‚РѕРІРёС‡",
       "category": "Стримеры"
     },
     {
       "id": "q24",
-      "name": "Звонки Валакаса",
+      "name": "РІР°Р»Р°РєР°СЃ Р·РІРѕРЅРєРё",
       "query": "#shorts РІР°Р»Р°РєР°СЃ Р·РІРѕРЅРєРё",
       "category": "Стримеры"
     },
     {
       "id": "q25",
-      "name": "Денис Петров",
+      "name": "РґРµРЅРёСЃ РїРµС‚СЂРѕРІ",
       "query": "#shorts РґРµРЅРёСЃ РїРµС‚СЂРѕРІ",
       "category": "Стримеры"
     },
     {
       "id": "q26",
-      "name": "Рофлы Валакаса",
+      "name": "РІР°Р»Р°РєР°СЃ СЂРѕС„Р»С‹",
       "query": "#shorts РІР°Р»Р°РєР°СЃ СЂРѕС„Р»С‹",
       "category": "Стримеры"
     },
     {
       "id": "q27",
-      "name": "Лимбус Компани",
+      "name": "#limbuscompany",
       "query": "#shorts #limbuscompany",
       "category": "Игры"
     },
     {
       "id": "q28",
-      "name": "Проджект Мун",
+      "name": "#projectmoon",
       "query": "#shorts #projectmoon",
       "category": "Игры"
     },
     {
       "id": "q29",
-      "name": "Дедлок",
+      "name": "#deadlock",
       "query": "#shorts #deadlock",
       "category": "Игры"
     },
     {
       "id": "q30",
-      "name": "Технологии",
+      "name": "#tech",
       "query": "#shorts #tech",
       "category": "Технологии"
     },
     {
       "id": "q31",
-      "name": "Линукс",
+      "name": "#linux",
       "query": "#shorts #linux",
       "category": "Технологии"
     },
     {
       "id": "q32",
-      "name": "В рекомендации",
+      "name": "#fyp",
       "query": "#shorts #fyp",
       "category": "Рекомендации"
     },
     {
       "id": "q33",
-      "name": "Рек",
+      "name": "#рек",
       "query": "#shorts #рек",
       "category": "Рекомендации"
     },
     {
       "id": "q34",
-      "name": "Искусство",
+      "name": "#art",
       "query": "#shorts #art",
       "category": "Творчество"
     },
     {
       "id": "q35",
-      "name": "Анимация",
+      "name": "#animation",
       "query": "#shorts #animation",
       "category": "Творчество"
     },
     {
       "id": "q36",
-      "name": "Мемы",
+      "name": "#meme",
       "query": "#shorts #meme",
       "category": "Юмор и мемы"
     },
     {
       "id": "q37",
-      "name": "Авторские персонажи",
+      "name": "#OC",
       "query": "#shorts #OC",
       "category": "Творчество"
     },
     {
       "id": "q38",
-      "name": "Анимационные мемы",
+      "name": "#animationmeme",
       "query": "#shorts #animationmeme",
       "category": "Творчество"
     }
