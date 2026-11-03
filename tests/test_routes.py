@@ -17,8 +17,8 @@ class FeedRouteTests(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         data = response.get_json()
         self.assertEqual((data["version"], data["count"]), (1, len(load_registry())))
-        self.assertEqual([topic["id"] for topic in data["topics"]], [f"q{i}" for i in range(39)])
-        self.assertEqual(data["topics"][0]["name"], "\u0440\u0435\u043a\u043e\u043c\u0435\u043d\u0434\u0430\u0446\u0438\u0438")
+        self.assertEqual([topic["id"] for topic in data["topics"]], [f"q{i}" for i in range(149)])
+        self.assertEqual(data["topics"][0]["name"], "#\u0440\u0435\u043a\u043e\u043c\u0435\u043d\u0434\u0430\u0446\u0438\u0438")
         self.assertEqual(data["topics"][37]["name"], "#OC")
         for topic in data["topics"]:
             self.assertTrue(topic["name"])
@@ -82,9 +82,9 @@ class FeedRouteTests(unittest.TestCase):
         document = {"clips": ["AAAAAAAAAAA", "BBBBBBBBBBB", "CCCCCCCCCCC"],
                     "clip_topics": {"BBBBBBBBBBB": ["q0", "q1"], "AAAAAAAAAAA": ["q1"]}}
         result = main.build_topic_catalog(document, [Topic("q0", "one", "one"), Topic("q1", "two", "two"), Topic("q2", "empty", "empty")])
-        self.assertEqual(result, [{"id": "q0", "name": "one", "category": "Другие", "clips": [1]},
-                                  {"id": "q1", "name": "two", "category": "Другие", "clips": [0, 1]},
-                                  {"id": "q2", "name": "empty", "category": "Другие", "clips": []}])
+        self.assertEqual(result, [{"id": "q0", "name": "one", "category": "Другие", "weight": 1, "allow_long": False, "clips": [1]},
+                                  {"id": "q1", "name": "two", "category": "Другие", "weight": 1, "allow_long": False, "clips": [0, 1]},
+                                  {"id": "q2", "name": "empty", "category": "Другие", "weight": 1, "allow_long": False, "clips": []}])
 
 
 if __name__ == "__main__":

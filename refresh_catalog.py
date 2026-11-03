@@ -8,6 +8,7 @@ from itertools import zip_longest
 import json
 from pathlib import Path
 import re
+import random
 import time
 from urllib.parse import urlsplit
 
@@ -23,7 +24,7 @@ SEARCH_URL = "https://www.youtube.com/results"
 CURATED_URL = "https://raw.githubusercontent.com/gorod13224-cpu/vr-shorts-data/main/shorts_urls.txt"
 MAX_RESPONSE_BYTES = 5 * 1024 * 1024
 MAX_ADDITIONS = 1000
-FULL_SCAN_MAX_ADDITIONS = 10000
+FULL_SCAN_MAX_ADDITIONS = 1000
 TOPIC_ID = re.compile(r'q(?:0|[1-9][0-9]*)\Z')
 INITIAL_DATA = re.compile(r'(?:\b(?:var\s+)?ytInitialData\s*|window\["ytInitialData"\]\s*)=\s*')
 AD_CONTAINERS = frozenset({
@@ -44,6 +45,8 @@ class Topic:
     name: str
     query: str
     category: str = "Другие"
+    weight: int = 1
+    allow_long: bool = False
 
 
 @dataclass(frozen=True)
@@ -68,8 +71,8 @@ def load_config(path=CONFIG_PATH):
         definitions = [{"id": f"q{i}", "query": query,
                         "name": query.replace("#shorts", "").strip() if isinstance(query, str) else ""}
                        for i, query in enumerate(data["search_queries"])]
-    if not isinstance(definitions, list) or not 1 <= len(definitions) <= 100:
-        raise RefreshError("Use 1–100 topic definitions")
+    if not isinstance(definitions, list) or not 1 <= len(definitions) <= 252:
+        raise RefreshError("Use 1–252 topic definitions")
     topics = []
     for item in definitions:
         if (not isinstance(item, dict) or not isinstance(item.get("id"), str) or not TOPIC_ID.fullmatch(item["id"])
@@ -78,7 +81,10 @@ def load_config(path=CONFIG_PATH):
         category = item.get("category", "Другие")
         if not isinstance(category, str) or not category.strip() or len(category) > 64:
             raise RefreshError("Topic category must be nonempty (max 64 characters)")
-        topics.append(Topic(item["id"], item["name"].strip(), item["query"].strip(), category.strip()))
+        weight, allow_long = item.get("weight", 1), item.get("allow_long", False)
+        if type(weight) is not int or not 1 <= weight <= 20 or type(allow_long) is not bool:
+            raise RefreshError("Topic weight must be 1–20 and allow_long must be boolean")
+        topics.append(Topic(item["id"], item["name"].strip(), item["query"].strip(), category.strip(), weight, allow_long))
     if len({topic.id for topic in topics}) != len(topics):
         raise RefreshError("Topic IDs must be unique")
     count, limit = data.get("queries_per_run"), data.get("max_additions")
@@ -98,6 +104,9 @@ def select_queries(config, now):
 
 def select_topics(config, now):
     count = min(config.queries_per_run, len(config.topics))
+    if any(topic.weight != 1 for topic in config.topics):
+        rng = random.Random(int(now // 1800))
+        return sorted(config.topics, key=lambda topic: rng.random() ** (1.0 / topic.weight), reverse=True)[:count]
     start = (int(now // 1800) * count) % len(config.topics)
     return [config.topics[(start + index) % len(config.topics)] for index in range(count)]
 
@@ -163,7 +172,7 @@ def has_shorts_overlay(renderer):
     return False
 
 
-def parse_short_ids(html):
+def parse_short_ids(html, allow_long=False):
     """Only recognized Shorts renderer + reel endpoints count; ordinary videos do not."""
     found = []
     known = set()
@@ -192,6 +201,12 @@ def parse_short_ids(html):
                 endpoint_id = short_endpoint_id(video.get("navigationEndpoint"))
                 if video.get("videoId") == endpoint_id:
                     clip = endpoint_id
+            if clip is None and allow_long and organic_renderer(video):
+                endpoint = video.get("navigationEndpoint", {})
+                watch = endpoint.get("watchEndpoint", {}) if isinstance(endpoint, dict) else {}
+                candidate = video.get("videoId")
+                if isinstance(candidate, str) and VIDEO_ID.fullmatch(candidate) and watch.get("videoId") == candidate:
+                    clip = candidate
             if clip and clip not in known:
                 known.add(clip)
                 found.append(clip)
@@ -269,16 +284,26 @@ def refresh_registry(registry_path=REGISTRY_PATH, config_path=CONFIG_PATH, *, fe
         selected = config.topics if full_scan else select_topics(config, time.time() if now is None else now)
         for topic in selected:
             query = topic.query
-            search_query = query if "#shorts" in query.lower() else "#shorts " + query
+            search_query = query if topic.allow_long or "#shorts" in query.lower() else "#shorts " + query
             try:
-                searches.append((topic, parse_short_ids(fetch(SEARCH_URL, {"search_query": search_query}))))
+                searches.append((topic, parse_short_ids(fetch(SEARCH_URL, {"search_query": search_query}), allow_long=topic.allow_long)))
                 report["successful_searches"] += 1
             except (requests.RequestException, ValueError, UnicodeError) as error:
                 report["source_errors"].append(f"Search {query!r}: {error}")
     if not searches:
         raise RefreshError("Every Shorts discovery source failed; registry retained. " + "; ".join(report["source_errors"]))
     # Interleave searches so the first topic cannot consume every new slot.
-    discovered = [clip for group in zip_longest(*(clips for _, clips in searches)) for clip in group if clip is not None]
+    discovered = []
+    positions = [0] * len(searches)
+    remaining = True
+    while remaining:
+        remaining = False
+        for index, (topic, clips) in enumerate(searches):
+            end = min(len(clips), positions[index] + topic.weight)
+            if end > positions[index]:
+                remaining = True
+                discovered.extend(clips[positions[index]:end])
+                positions[index] = end
     appended = []
     known = set(existing)
     limit = min(addition_limit, SLOT_CAPACITY - len(existing))

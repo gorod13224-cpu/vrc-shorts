@@ -6,9 +6,11 @@
   "topics": [
     {
       "id": "q0",
-      "name": "рекомендации",
-      "query": "#shorts рекомендации",
-      "category": "Рекомендации"
+      "name": "#рекомендации",
+      "query": "#рекомендации",
+      "category": "Рекомендации",
+      "weight": 1,
+      "allow_long": false
     },
     {
       "id": "q1",
@@ -18,9 +20,11 @@
     },
     {
       "id": "q2",
-      "name": "мегамемы",
-      "query": "#shorts мегамемы",
-      "category": "Юмор и мемы"
+      "name": "#мегамемы",
+      "query": "#мегамемы",
+      "category": "Мемы и юмор",
+      "weight": 1,
+      "allow_long": false
     },
     {
       "id": "q3",
@@ -30,15 +34,19 @@
     },
     {
       "id": "q4",
-      "name": "тренды",
-      "query": "#shorts тренды",
-      "category": "Рекомендации"
+      "name": "#тренды",
+      "query": "#тренды",
+      "category": "Рекомендации",
+      "weight": 1,
+      "allow_long": false
     },
     {
       "id": "q5",
-      "name": "угар",
-      "query": "#shorts угар",
-      "category": "Юмор и мемы"
+      "name": "#угар",
+      "query": "#угар",
+      "category": "Мемы и юмор",
+      "weight": 1,
+      "allow_long": false
     },
     {
       "id": "q6",
@@ -48,9 +56,11 @@
     },
     {
       "id": "q7",
-      "name": "подборка приколов",
-      "query": "#shorts подборка приколов",
-      "category": "Юмор и мемы"
+      "name": "#подборкаприколов",
+      "query": "#подборкаприколов",
+      "category": "Мемы и юмор",
+      "weight": 1,
+      "allow_long": false
     },
     {
       "id": "q8",
@@ -60,45 +70,59 @@
     },
     {
       "id": "q9",
-      "name": "нарезки стримеров",
-      "query": "#shorts нарезки стримеров",
-      "category": "Стримеры"
+      "name": "#нарезкистримеров",
+      "query": "#нарезкистримеров",
+      "category": "Стримеры",
+      "weight": 1,
+      "allow_long": false
     },
     {
       "id": "q10",
-      "name": "братишкин",
-      "query": "#shorts братишкин",
-      "category": "Стримеры"
+      "name": "#братишкин",
+      "query": "#братишкин",
+      "category": "Стримеры",
+      "weight": 1,
+      "allow_long": false
     },
     {
       "id": "q11",
-      "name": "bratishkinoff",
-      "query": "#shorts bratishkinoff",
-      "category": "Стримеры"
+      "name": "#bratishkinoff",
+      "query": "#bratishkinoff",
+      "category": "Стримеры",
+      "weight": 1,
+      "allow_long": false
     },
     {
       "id": "q12",
-      "name": "стинт",
-      "query": "#shorts стинт",
-      "category": "Стримеры"
+      "name": "#стинт",
+      "query": "#стинт",
+      "category": "Стримеры",
+      "weight": 1,
+      "allow_long": false
     },
     {
       "id": "q13",
-      "name": "stint",
-      "query": "#shorts stint",
-      "category": "Стримеры"
+      "name": "#stint",
+      "query": "#stint",
+      "category": "Стримеры",
+      "weight": 1,
+      "allow_long": false
     },
     {
       "id": "q14",
-      "name": "тоха2х2",
-      "query": "#shorts тоха2х2",
-      "category": "Стримеры"
+      "name": "#тоха2х2",
+      "query": "#тоха2х2",
+      "category": "Стримеры",
+      "weight": 1,
+      "allow_long": false
     },
     {
       "id": "q15",
       "name": "тоха 2х2",
       "query": "#shorts тоха 2х2",
-      "category": "Стримеры"
+      "category": "Стримеры",
+      "weight": 1,
+      "allow_long": false
     },
     {
       "id": "q16",
@@ -120,21 +144,27 @@
     },
     {
       "id": "q19",
-      "name": "твич приколы",
-      "query": "#shorts твич приколы",
-      "category": "Стримеры"
+      "name": "#твичприколы",
+      "query": "#твичприколы",
+      "category": "Стримеры",
+      "weight": 1,
+      "allow_long": false
     },
     {
       "id": "q20",
-      "name": "глад валакас",
-      "query": "#shorts глад валакас",
-      "category": "Стримеры"
+      "name": "#гладвалакас",
+      "query": "#гладвалакас",
+      "category": "Стримеры",
+      "weight": 1,
+      "allow_long": false
     },
     {
       "id": "q21",
-      "name": "валакас",
-      "query": "#shorts валакас",
-      "category": "Стримеры"
+      "name": "#валакас",
+      "query": "#валакас",
+      "category": "Стримеры",
+      "weight": 1,
+      "allow_long": false
     },
     {
       "id": "q22",
@@ -150,21 +180,27 @@
     },
     {
       "id": "q24",
-      "name": "валакас звонки",
-      "query": "#shorts валакас звонки",
-      "category": "Стримеры"
+      "name": "#валакасзвонки",
+      "query": "#валакасзвонки",
+      "category": "Стримеры",
+      "weight": 1,
+      "allow_long": false
     },
     {
       "id": "q25",
-      "name": "денис петров",
-      "query": "#shorts денис петров",
-      "category": "Стримеры"
+      "name": "#дениспетров",
+      "query": "#дениспетров",
+      "category": "Стримеры",
+      "weight": 1,
+      "allow_long": false
     },
     {
       "id": "q26",
-      "name": "валакас рофлы",
-      "query": "#shorts валакас рофлы",
-      "category": "Стримеры"
+      "name": "#валакасрофлы",
+      "query": "#валакасрофлы",
+      "category": "Стримеры",
+      "weight": 1,
+      "allow_long": false
     },
     {
       "id": "q27",
@@ -237,6 +273,886 @@
       "name": "#animationmeme",
       "query": "#shorts #animationmeme",
       "category": "Творчество"
+    },
+    {
+      "id": "q39",
+      "name": "#тикток",
+      "query": "#тикток",
+      "category": "Рекомендации",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q40",
+      "name": "#мемы",
+      "query": "#мемы",
+      "category": "Мемы и юмор",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q41",
+      "name": "#memes",
+      "query": "#memes",
+      "category": "Мемы и юмор",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q42",
+      "name": "#мурино",
+      "query": "#мурино",
+      "category": "Мемы и юмор",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q43",
+      "name": "#друн",
+      "query": "#друн",
+      "category": "Мемы и юмор",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q44",
+      "name": "#ч",
+      "query": "#ч",
+      "category": "Мемы и юмор",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q45",
+      "name": "#бабачай",
+      "query": "#бабачай",
+      "category": "Мемы и юмор",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q46",
+      "name": "#пранк",
+      "query": "#пранк",
+      "category": "Мемы и юмор",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q47",
+      "name": "#постирония",
+      "query": "#постирония",
+      "category": "Мемы и юмор",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q48",
+      "name": "#juggtok",
+      "query": "#juggtok",
+      "category": "Мемы и юмор",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q49",
+      "name": "#коронныефразы",
+      "query": "#коронныефразы",
+      "category": "Мемы и юмор",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q50",
+      "name": "#смешныефразы",
+      "query": "#смешныефразы",
+      "category": "Мемы и юмор",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q51",
+      "name": "#мем",
+      "query": "#мем",
+      "category": "Мемы и юмор",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q52",
+      "name": "#лучшиймем",
+      "query": "#лучшиймем",
+      "category": "Мемы и юмор",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q53",
+      "name": "#этотприцелпростоимба",
+      "query": "#этотприцелпростоимба",
+      "category": "Мемы и юмор",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q54",
+      "name": "#тыдолженноситьэто",
+      "query": "#тыдолженноситьэто",
+      "category": "Мемы и юмор",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q55",
+      "name": "#братишкинофф",
+      "query": "#братишкинофф",
+      "category": "Стримеры",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q56",
+      "name": "#фрешмен",
+      "query": "#фрешмен",
+      "category": "Стримеры",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q57",
+      "name": "#жмышенко",
+      "query": "#жмышенко",
+      "category": "Стримеры",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q58",
+      "name": "#мелстрой",
+      "query": "#мелстрой",
+      "category": "Стримеры",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q59",
+      "name": "#папич",
+      "query": "#папич",
+      "category": "Стримеры",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q60",
+      "name": "#стрим",
+      "query": "#стрим",
+      "category": "Стримеры",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q61",
+      "name": "#твич",
+      "query": "#твич",
+      "category": "Стримеры",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q62",
+      "name": "#иванзоло",
+      "query": "#иванзоло",
+      "category": "Стримеры",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q63",
+      "name": "#иванзоло2004",
+      "query": "#иванзоло2004",
+      "category": "Стримеры",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q64",
+      "name": "#ivanzolo",
+      "query": "#ivanzolo",
+      "category": "Стримеры",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q65",
+      "name": "#ivanzolo2004",
+      "query": "#ivanzolo2004",
+      "category": "Стримеры",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q66",
+      "name": "#иванзолотопор",
+      "query": "#иванзолотопор",
+      "category": "Стримеры",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q67",
+      "name": "#золо",
+      "query": "#золо",
+      "category": "Стримеры",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q68",
+      "name": "#топор",
+      "query": "#топор",
+      "category": "Стримеры",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q69",
+      "name": "#мге",
+      "query": "#мге",
+      "category": "МГЕ",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q70",
+      "name": "#mge",
+      "query": "#mge",
+      "category": "МГЕ",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q71",
+      "name": "#чтотакоемге",
+      "query": "#чтотакоемге",
+      "category": "МГЕ",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q72",
+      "name": "#мгестрашилка",
+      "query": "#мгестрашилка",
+      "category": "Хоррор и МГЕ-истории",
+      "weight": 6,
+      "allow_long": true
+    },
+    {
+      "id": "q73",
+      "name": "#мгестрашилки",
+      "query": "#мгестрашилки",
+      "category": "Хоррор и МГЕ-истории",
+      "weight": 6,
+      "allow_long": true
+    },
+    {
+      "id": "q74",
+      "name": "#страшилки",
+      "query": "#страшилки",
+      "category": "Хоррор и МГЕ-истории",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q75",
+      "name": "#страшилкимге",
+      "query": "#страшилкимге",
+      "category": "Хоррор и МГЕ-истории",
+      "weight": 6,
+      "allow_long": true
+    },
+    {
+      "id": "q76",
+      "name": "#страшилка",
+      "query": "#страшилка",
+      "category": "Хоррор и МГЕ-истории",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q77",
+      "name": "#хоррор",
+      "query": "#хоррор",
+      "category": "Хоррор и МГЕ-истории",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q78",
+      "name": "#страшныеистории",
+      "query": "#страшныеистории",
+      "category": "Хоррор и МГЕ-истории",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q79",
+      "name": "#мгехоррор",
+      "query": "#мгехоррор",
+      "category": "Хоррор и МГЕ-истории",
+      "weight": 6,
+      "allow_long": true
+    },
+    {
+      "id": "q80",
+      "name": "#селомолочное",
+      "query": "#селомолочное",
+      "category": "Хоррор и МГЕ-истории",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q81",
+      "name": "#молочное",
+      "query": "#молочное",
+      "category": "Хоррор и МГЕ-истории",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q82",
+      "name": "#вихорьков",
+      "query": "#вихорьков",
+      "category": "Хоррор и МГЕ-истории",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q83",
+      "name": "#scp",
+      "query": "#scp",
+      "category": "Хоррор и МГЕ-истории",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q84",
+      "name": "#мгеистории",
+      "query": "#мгеистории",
+      "category": "Хоррор и МГЕ-истории",
+      "weight": 6,
+      "allow_long": true
+    },
+    {
+      "id": "q85",
+      "name": "#котики",
+      "query": "#котики",
+      "category": "Котики",
+      "weight": 4,
+      "allow_long": false
+    },
+    {
+      "id": "q86",
+      "name": "#кот",
+      "query": "#кот",
+      "category": "Котики",
+      "weight": 4,
+      "allow_long": false
+    },
+    {
+      "id": "q87",
+      "name": "#кошка",
+      "query": "#кошка",
+      "category": "Котики",
+      "weight": 4,
+      "allow_long": false
+    },
+    {
+      "id": "q88",
+      "name": "#коты",
+      "query": "#коты",
+      "category": "Котики",
+      "weight": 4,
+      "allow_long": false
+    },
+    {
+      "id": "q89",
+      "name": "#котята",
+      "query": "#котята",
+      "category": "Котики",
+      "weight": 4,
+      "allow_long": false
+    },
+    {
+      "id": "q90",
+      "name": "#смешныекоты",
+      "query": "#смешныекоты",
+      "category": "Котики",
+      "weight": 4,
+      "allow_long": false
+    },
+    {
+      "id": "q91",
+      "name": "#котприкол",
+      "query": "#котприкол",
+      "category": "Котики",
+      "weight": 4,
+      "allow_long": false
+    },
+    {
+      "id": "q92",
+      "name": "#cat",
+      "query": "#cat",
+      "category": "Котики",
+      "weight": 4,
+      "allow_long": false
+    },
+    {
+      "id": "q93",
+      "name": "#cats",
+      "query": "#cats",
+      "category": "Котики",
+      "weight": 4,
+      "allow_long": false
+    },
+    {
+      "id": "q94",
+      "name": "#kitten",
+      "query": "#kitten",
+      "category": "Котики",
+      "weight": 4,
+      "allow_long": false
+    },
+    {
+      "id": "q95",
+      "name": "#funnycats",
+      "query": "#funnycats",
+      "category": "Котики",
+      "weight": 4,
+      "allow_long": false
+    },
+    {
+      "id": "q96",
+      "name": "#catmemes",
+      "query": "#catmemes",
+      "category": "Котики",
+      "weight": 4,
+      "allow_long": false
+    },
+    {
+      "id": "q97",
+      "name": "#кс",
+      "query": "#кс",
+      "category": "Игры",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q98",
+      "name": "#ксго",
+      "query": "#ксго",
+      "category": "Игры",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q99",
+      "name": "#дота",
+      "query": "#дота",
+      "category": "Игры",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q100",
+      "name": "#валорант",
+      "query": "#валорант",
+      "category": "Игры",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q101",
+      "name": "#teamfortress2",
+      "query": "#teamfortress2",
+      "category": "Игры",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q102",
+      "name": "#tf2",
+      "query": "#tf2",
+      "category": "Игры",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q103",
+      "name": "#тф2",
+      "query": "#тф2",
+      "category": "Игры",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q104",
+      "name": "#тимфортресс",
+      "query": "#тимфортресс",
+      "category": "Игры",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q105",
+      "name": "#тимфортрес2",
+      "query": "#тимфортрес2",
+      "category": "Игры",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q106",
+      "name": "#нарезкифильмов",
+      "query": "#нарезкифильмов",
+      "category": "Фильмы и сериалы",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q107",
+      "name": "#моментыизфильмов",
+      "query": "#моментыизфильмов",
+      "category": "Фильмы и сериалы",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q108",
+      "name": "#фильмы",
+      "query": "#фильмы",
+      "category": "Фильмы и сериалы",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q109",
+      "name": "#кино",
+      "query": "#кино",
+      "category": "Фильмы и сериалы",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q110",
+      "name": "#киномоменты",
+      "query": "#киномоменты",
+      "category": "Фильмы и сериалы",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q111",
+      "name": "#movieclips",
+      "query": "#movieclips",
+      "category": "Фильмы и сериалы",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q112",
+      "name": "#аниме",
+      "query": "#аниме",
+      "category": "Аниме",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q113",
+      "name": "#анимемоменты",
+      "query": "#анимемоменты",
+      "category": "Аниме",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q114",
+      "name": "#анимеэдит",
+      "query": "#анимеэдит",
+      "category": "Аниме",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q115",
+      "name": "#anime",
+      "query": "#anime",
+      "category": "Аниме",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q116",
+      "name": "#animeedit",
+      "query": "#animeedit",
+      "category": "Аниме",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q117",
+      "name": "#amv",
+      "query": "#amv",
+      "category": "Аниме",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q118",
+      "name": "#нейрослоп",
+      "query": "#нейрослоп",
+      "category": "Нейрослоп",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q119",
+      "name": "#нейровидео",
+      "query": "#нейровидео",
+      "category": "Нейрослоп",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q120",
+      "name": "#иистории",
+      "query": "#иистории",
+      "category": "Нейрослоп",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q121",
+      "name": "#aislop",
+      "query": "#aislop",
+      "category": "Нейрослоп",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q122",
+      "name": "#brainrot",
+      "query": "#brainrot",
+      "category": "Нейрослоп",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q123",
+      "name": "#aibrainrot",
+      "query": "#aibrainrot",
+      "category": "Нейрослоп",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q124",
+      "name": "#italianbrainrot",
+      "query": "#italianbrainrot",
+      "category": "Нейрослоп",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q125",
+      "name": "#эдит",
+      "query": "#эдит",
+      "category": "Эдиты и музыка",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q126",
+      "name": "#эдиты",
+      "query": "#эдиты",
+      "category": "Эдиты и музыка",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q127",
+      "name": "#edit",
+      "query": "#edit",
+      "category": "Эдиты и музыка",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q128",
+      "name": "#edits",
+      "query": "#edits",
+      "category": "Эдиты и музыка",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q129",
+      "name": "#4kedit",
+      "query": "#4kedit",
+      "category": "Эдиты и музыка",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q130",
+      "name": "#фонк",
+      "query": "#фонк",
+      "category": "Эдиты и музыка",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q131",
+      "name": "#phonk",
+      "query": "#phonk",
+      "category": "Эдиты и музыка",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q132",
+      "name": "#phonkedit",
+      "query": "#phonkedit",
+      "category": "Эдиты и музыка",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q133",
+      "name": "#aura",
+      "query": "#aura",
+      "category": "Эдиты и музыка",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q134",
+      "name": "#аура",
+      "query": "#аура",
+      "category": "Эдиты и музыка",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q135",
+      "name": "#auraedit",
+      "query": "#auraedit",
+      "category": "Эдиты и музыка",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q136",
+      "name": "#aurafarming",
+      "query": "#aurafarming",
+      "category": "Эдиты и музыка",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q137",
+      "name": "#sigma",
+      "query": "#sigma",
+      "category": "Эдиты и музыка",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q138",
+      "name": "#сигма",
+      "query": "#сигма",
+      "category": "Эдиты и музыка",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q139",
+      "name": "#sigmaedit",
+      "query": "#sigmaedit",
+      "category": "Эдиты и музыка",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q140",
+      "name": "#мелстройность",
+      "query": "#мелстройность",
+      "category": "Эдиты и музыка",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q141",
+      "name": "#русскийпанк",
+      "query": "#русскийпанк",
+      "category": "Эдиты и музыка",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q142",
+      "name": "#косплей",
+      "query": "#косплей",
+      "category": "Косплей",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q143",
+      "name": "#cosplay",
+      "query": "#cosplay",
+      "category": "Косплей",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q144",
+      "name": "#анимекосплей",
+      "query": "#анимекосплей",
+      "category": "Косплей",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q145",
+      "name": "#animecosplay",
+      "query": "#animecosplay",
+      "category": "Косплей",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q146",
+      "name": "#косплеер",
+      "query": "#косплеер",
+      "category": "Косплей",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q147",
+      "name": "#косплейперевоплощение",
+      "query": "#косплейперевоплощение",
+      "category": "Косплей",
+      "weight": 1,
+      "allow_long": false
+    },
+    {
+      "id": "q148",
+      "name": "#cosplaytransformation",
+      "query": "#cosplaytransformation",
+      "category": "Косплей",
+      "weight": 1,
+      "allow_long": false
     }
   ]
 }

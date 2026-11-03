@@ -125,3 +125,9 @@ download videos, make external network requests, or contact the production servi
 Topic definitions may include a Russian `category` label. Edit `feed_sources.json` to organize phone categories; keep topic IDs stable. The phone supports selecting multiple tags or a whole category and combines their clips.
 
 Production refreshes scan all configured topics every 30 minutes and append up to 1000 unique new clips per run. Discovery can return fewer fresh matches; existing slots and saved/shared IDs are preserved.
+
+## Recommendation settings
+
+The phone searches both categories and hashtag labels; search is local to settings. Labels retain their original spelling. Stable topic IDs are preserved when aliases are updated, and new topics append new IDs. The current config has 149 topics and the client supports 252.
+
+`weight` (1–20, default 1) controls weighted query selection without replacement and result interleaving under the per-run cap. The five configured MGE story tags have weight 6, the twelve cat tags have weight 4. `allow_long` defaults to false and is enabled only for the five story tags: those queries omit the forced Shorts filter and accept organic watch-endpoint video renderers as well as Shorts. Promoted results remain excluded. No AI tool/tutorial hashtags were added.
