@@ -17,7 +17,7 @@ class FeedRouteTests(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         data = response.get_json()
         self.assertEqual((data["version"], data["count"]), (1, len(load_registry())))
-        self.assertEqual([topic["id"] for topic in data["topics"]], [f"q{i}" for i in range(27)])
+        self.assertEqual([topic["id"] for topic in data["topics"]], [f"q{i}" for i in range(39)])
         for topic in data["topics"]:
             self.assertTrue(topic["name"])
             self.assertEqual(topic["clips"], sorted(set(topic["clips"])))
