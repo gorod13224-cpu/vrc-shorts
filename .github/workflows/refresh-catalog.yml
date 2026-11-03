@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       full_scan:
-        description: 'Scan all topics and append up to 200 clips (initial backfill)'
+        description: 'Scan all topics and append up to 1000 clips (initial backfill)'
         required: false
         type: boolean
         default: false
@@ -44,7 +44,7 @@ jobs:
           FULL_SCAN: ${{ inputs.full_scan || false }}
         run: |
           if [[ "$FULL_SCAN" == 'true' ]]; then
-            python refresh_catalog.py --full-scan --max-additions 200 | tee "$RUNNER_TEMP/shorts-refresh.json"
+            python refresh_catalog.py --full-scan --max-additions 1000 | tee "$RUNNER_TEMP/shorts-refresh.json"
           else
             python refresh_catalog.py | tee "$RUNNER_TEMP/shorts-refresh.json"
           fi

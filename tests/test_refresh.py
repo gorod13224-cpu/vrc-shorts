@@ -213,9 +213,18 @@ class RefreshRegistryTests(unittest.TestCase):
         self.assertEqual(select_queries(config, 1799), ["one", "two"])
         self.assertEqual(select_queries(config, 1800), ["three", "one"])
         self.assertEqual(select_queries(config, 3600), ["two", "three"])
-        self.configure(limit=21)
+        self.configure(limit=1001)
         with self.assertRaisesRegex(RefreshError, "max_additions"):
             load_config(self.config)
+
+    def test_scheduled_refresh_can_append_a_thousand_unique_clips(self):
+        self.configure(limit=1000)
+        report = self.refresh(lambda *args: page(*(short(f"{n:011d}") for n in range(1100))))
+        self.assertEqual(report["added"], 1000)
+        clips = load_registry(self.registry)
+        self.assertEqual(clips[0], "AAAAAAAAAAA")
+        self.assertEqual(len(clips), len(set(clips)))
+        self.assertEqual(len(clips), 1001)
 
     def test_old_slots_gain_topics_without_count_or_order_changes(self):
         self.configure(["one", "two"])
@@ -225,20 +234,20 @@ class RefreshRegistryTests(unittest.TestCase):
         self.assertEqual(document["clips"], ["AAAAAAAAAAA"])
         self.assertEqual(document["clip_topics"], {"AAAAAAAAAAA": ["q0", "q1"]})
 
-    def test_full_scan_visits_all_topics_and_has_explicit_200_slot_ceiling(self):
+    def test_full_scan_visits_all_topics_and_has_explicit_1000_slot_ceiling(self):
         self.configure([f"topic{i}" for i in range(10)])
         calls = []
         def fetch(url, params=None):
             calls.append(params["search_query"])
-            return page(*(short(f"{number:011d}") for number in range(250)))
-        report = self.refresh(fetch, full_scan=True, max_additions=200)
+            return page(*(short(f"{number:011d}") for number in range(1100)))
+        report = self.refresh(fetch, full_scan=True, max_additions=1000)
         self.assertEqual(len(calls), 10)
-        self.assertEqual(report["added"], 200)
+        self.assertEqual(report["added"], 1000)
         document = load_registry_document(self.registry)
         self.assertEqual(document["clips"][0], "AAAAAAAAAAA")
         self.assertEqual(document["clip_topics"]["00000000000"], [f"q{i}" for i in range(10)])
-        with self.assertRaisesRegex(RefreshError, "between 1 and 20"):
-            self.refresh(fetch, max_additions=200)
+        with self.assertRaisesRegex(RefreshError, "between 1 and 1000"):
+            self.refresh(fetch, max_additions=1001)
 
     def test_refresh_preserves_other_metadata_and_existing_topic_memberships(self):
         write_registry_document(self.registry, {"version": 1, "clips": ["AAAAAAAAAAA"],

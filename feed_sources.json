@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "queries_per_run": 6,
-  "max_additions": 20,
+  "queries_per_run": 39,
+  "max_additions": 1000,
   "include_curated_source": true,
   "topics": [
     {

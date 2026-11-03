@@ -44,7 +44,7 @@ need a backend deployment; existing history and shares retain their original IDs
 ## Automatic refresh
 
 `.github/workflows/refresh-catalog.yml` runs every 30 minutes at minutes 23 and 53 (UTC) and supports
-manual **Run workflow**. It runs tests, discovers Shorts, appends at most 20 new
+manual **Run workflow**. It runs tests, discovers Shorts, appends at most 1000 new
 IDs, and commits only `clips.json` when entries or topic memberships change. The connected Vercel
 Git integration then deploys the committed registry. Actions needs to be enabled
 and allowed to write repository contents; it uses its built-in, repository-scoped
@@ -53,7 +53,7 @@ is required. Verify the first bot commit produces a Vercel deployment for the
 project's Git/plan settings.
 
 The editable `feed_sources.json` contains the existing 27 search topics, queries per
-run (up to 8), maximum additions (up to 20), and the curated-source switch. Queries
+run (up to 100), maximum additions (up to 1000), and the curated-source switch. Queries
 rotate every 30 minutes. Results from successful searches are interleaved to avoid filling
 the whole update with the first topic. `#shorts` is added when a query omits it.
 Each topic has an explicit stable `id`, display `name` (the existing query without
@@ -89,7 +89,7 @@ python refresh_catalog.py --dry-run
 For initial topic population, run **Run workflow → full_scan = true**, or:
 
 ```sh
-python refresh_catalog.py --full-scan --max-additions 200
+python refresh_catalog.py --full-scan --max-additions 1000
 ```
 
 This explicit manual mode scans all 27 topics and caps new clips at 200. Without
@@ -123,3 +123,5 @@ The tests use Flask's test client and mocked YouTube search responses. They do n
 download videos, make external network requests, or contact the production service.
 
 Topic definitions may include a Russian `category` label. Edit `feed_sources.json` to organize phone categories; keep topic IDs stable. The phone supports selecting multiple tags or a whole category and combines their clips.
+
+Production refreshes scan all configured topics every 30 minutes and append up to 1000 unique new clips per run. Discovery can return fewer fresh matches; existing slots and saved/shared IDs are preserved.

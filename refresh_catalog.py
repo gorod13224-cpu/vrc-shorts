@@ -22,8 +22,8 @@ CONFIG_PATH = Path(__file__).with_name("feed_sources.json")
 SEARCH_URL = "https://www.youtube.com/results"
 CURATED_URL = "https://raw.githubusercontent.com/gorod13224-cpu/vr-shorts-data/main/shorts_urls.txt"
 MAX_RESPONSE_BYTES = 5 * 1024 * 1024
-MAX_ADDITIONS = 20
-FULL_SCAN_MAX_ADDITIONS = 200
+MAX_ADDITIONS = 1000
+FULL_SCAN_MAX_ADDITIONS = 10000
 TOPIC_ID = re.compile(r'q(?:0|[1-9][0-9]*)\Z')
 INITIAL_DATA = re.compile(r'(?:\b(?:var\s+)?ytInitialData\s*|window\["ytInitialData"\]\s*)=\s*')
 AD_CONTAINERS = frozenset({
@@ -82,8 +82,8 @@ def load_config(path=CONFIG_PATH):
     if len({topic.id for topic in topics}) != len(topics):
         raise RefreshError("Topic IDs must be unique")
     count, limit = data.get("queries_per_run"), data.get("max_additions")
-    if type(count) is not int or not 1 <= count <= 8:
-        raise RefreshError("queries_per_run must be between 1 and 8")
+    if type(count) is not int or not 1 <= count <= 100:
+        raise RefreshError("queries_per_run must be between 1 and 100")
     if type(limit) is not int or not 1 <= limit <= MAX_ADDITIONS:
         raise RefreshError(f"max_additions must be between 1 and {MAX_ADDITIONS}")
     curated = data.get("include_curated_source")
@@ -318,7 +318,7 @@ def main():
     parser.add_argument("--config", type=Path, default=CONFIG_PATH)
     parser.add_argument("--dry-run", action="store_true", help="Report candidates without changing the registry")
     parser.add_argument("--full-scan", action="store_true", help="Scan every configured topic (manual backfill)")
-    parser.add_argument("--max-additions", type=int, help="At most 20 normally, or 200 with --full-scan")
+    parser.add_argument("--max-additions", type=int, help="At most 1000 new unique clips per refresh")
     args = parser.parse_args()
     try:
         report = refresh_registry(args.registry, args.config, dry_run=args.dry_run,
