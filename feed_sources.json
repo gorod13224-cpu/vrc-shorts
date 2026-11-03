@@ -1,0 +1,143 @@
+{
+  "version": 1,
+  "queries_per_run": 6,
+  "max_additions": 20,
+  "include_curated_source": true,
+  "topics": [
+    {
+      "id": "q0",
+      "name": "рекомендации",
+      "query": "#shorts рекомендации"
+    },
+    {
+      "id": "q1",
+      "name": "memes funny",
+      "query": "#shorts memes funny"
+    },
+    {
+      "id": "q2",
+      "name": "мегамемы",
+      "query": "#shorts мегамемы"
+    },
+    {
+      "id": "q3",
+      "name": "приколы тикток",
+      "query": "#shorts приколы тикток"
+    },
+    {
+      "id": "q4",
+      "name": "тренды",
+      "query": "#shorts тренды"
+    },
+    {
+      "id": "q5",
+      "name": "угар",
+      "query": "#shorts угар"
+    },
+    {
+      "id": "q6",
+      "name": "youtube shorts",
+      "query": "#shorts youtube shorts"
+    },
+    {
+      "id": "q7",
+      "name": "подборка приколов",
+      "query": "#shorts подборка приколов"
+    },
+    {
+      "id": "q8",
+      "name": "стрим приколы",
+      "query": "#shorts стрим приколы"
+    },
+    {
+      "id": "q9",
+      "name": "нарезки стримеров",
+      "query": "#shorts нарезки стримеров"
+    },
+    {
+      "id": "q10",
+      "name": "братишкин",
+      "query": "#shorts братишкин"
+    },
+    {
+      "id": "q11",
+      "name": "bratishkinoff",
+      "query": "#shorts bratishkinoff"
+    },
+    {
+      "id": "q12",
+      "name": "стинт",
+      "query": "#shorts стинт"
+    },
+    {
+      "id": "q13",
+      "name": "stint",
+      "query": "#shorts stint"
+    },
+    {
+      "id": "q14",
+      "name": "тоха2х2",
+      "query": "#shorts тоха2х2"
+    },
+    {
+      "id": "q15",
+      "name": "тоха 2х2",
+      "query": "#shorts тоха 2х2"
+    },
+    {
+      "id": "q16",
+      "name": "дрейк",
+      "query": "#shorts дрейк"
+    },
+    {
+      "id": "q17",
+      "name": "drakeww",
+      "query": "#shorts drakeww"
+    },
+    {
+      "id": "q18",
+      "name": "твич фрешмен",
+      "query": "#shorts твич фрешмен"
+    },
+    {
+      "id": "q19",
+      "name": "твич приколы",
+      "query": "#shorts твич приколы"
+    },
+    {
+      "id": "q20",
+      "name": "глад валакас",
+      "query": "#shorts глад валакас"
+    },
+    {
+      "id": "q21",
+      "name": "валакас",
+      "query": "#shorts валакас"
+    },
+    {
+      "id": "q22",
+      "name": "валакас приколы",
+      "query": "#shorts валакас приколы"
+    },
+    {
+      "id": "q23",
+      "name": "жмышенко валерий альбертович",
+      "query": "#shorts жмышенко валерий альбертович"
+    },
+    {
+      "id": "q24",
+      "name": "валакас звонки",
+      "query": "#shorts валакас звонки"
+    },
+    {
+      "id": "q25",
+      "name": "денис петров",
+      "query": "#shorts денис петров"
+    },
+    {
+      "id": "q26",
+      "name": "валакас рофлы",
+      "query": "#shorts валакас рофлы"
+    }
+  ]
+}

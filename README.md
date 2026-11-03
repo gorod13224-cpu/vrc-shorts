@@ -1,16 +1,26 @@
 # VRCShorts
 
-The existing `/shorts` random-search endpoint is retained for older worlds.
+The existing `/shorts` redirect endpoint is retained for older worlds. It now
+selects a video from the local committed catalog instead of searching YouTube.
 History and video sharing use the committed, append-only registry in `clips.json`.
 Its initial videos come from `gorod13224-cpu/vr-shorts-data/shorts_urls.txt`.
 
-- `GET /catalog.json` returns `{"version":1,"count":N}`. Slots are contiguous from `0` through `N-1`.
+- `GET /catalog.json` returns `{"version":1,"count":N,"topics":[{"id":"q0","name":"рекомендации","clips":[0,5]}]}`. Slots are contiguous from `0` through `N-1`.
 - `GET /clip/0` redirects to the same YouTube video on every request. No video is downloaded or proxied by this route.
 - Missing, negative and out-of-range slots return `404`. Request parameters cannot select an arbitrary redirect target.
 - Both endpoints and the legacy random redirect use `Cache-Control: no-store`.
 
-The registry loads once per server process. These new routes do not search YouTube,
-call GitHub, or make another external request for each player.
+The registry and topic definitions load once per server process. None of these
+routes searches YouTube, calls GitHub, or makes an external request for each player.
+An empty legacy catalog returns `503` rather than an unrelated fallback video.
+
+Topic IDs `q0` through `q26` identify the existing 27 queries. Every topic appears
+in the response, even with `clips:[]`; an empty topic has no ready videos and must
+not silently fall back to all videos. An unclassified clip remains in the global
+feed only. Old clients can keep reading `version` and `count` and ignore `topics`.
+The registry stores optional `clip_topics` associations by YouTube ID, so growing
+the catalog never renumbers a shared clip or its topic membership. Normal URL-file
+imports preserve these associations and other registry metadata.
 
 ## Adding videos
 
@@ -26,12 +36,75 @@ an existing slot. An invalid link or a capacity overflow leaves the registry fil
 unchanged. Never manually reorder, remove or replace registry entries; already
 shared videos and players' history refer to their numeric slot.
 
-The stable-feed protocol allows up to 1024 reserved client URLs, so the importer
-rejects a larger registry. The current Unity integration still uses the legacy
-random feed; reserving stable URLs and adding history/sharing are separate client
-changes. Once a world reserves the full pool, new entries within that capacity
-only need a backend deployment. Importing a data-file edit is intentional; the
-server does not silently remap slots from a mutable remote text file.
+The stable-feed protocol allows up to 8192 reserved client URLs, so the importer
+rejects a larger registry. The world must reserve matching URLs and clamp the
+catalog count to its own baked capacity. New entries within that capacity only
+need a backend deployment; existing history and shares retain their original IDs.
+
+## Automatic refresh
+
+`.github/workflows/refresh-catalog.yml` runs hourly at minute 23 (UTC) and supports
+manual **Run workflow**. It runs tests, discovers Shorts, appends at most 20 new
+IDs, and commits only `clips.json` when entries or topic memberships change. The connected Vercel
+Git integration then deploys the committed registry. Actions needs to be enabled
+and allowed to write repository contents; it uses its built-in, repository-scoped
+`GITHUB_TOKEN`. No YouTube API key, personal access token or runtime write secret
+is required. Verify the first bot commit produces a Vercel deployment for the
+project's Git/plan settings.
+
+The editable `feed_sources.json` contains the existing 27 search topics, queries per
+run (up to 8), maximum additions (up to 20), and the curated-source switch. Queries
+rotate each hour. Results from successful searches are interleaved to avoid filling
+the whole update with the first topic. `#shorts` is added when a query omits it.
+Each topic has an explicit stable `id`, display `name` (the existing query without
+the common `#shorts` prefix), and `query`. Do not renumber or reuse IDs when editing
+the file. These are discovery topics, not invented categories or a free-form query
+transport from the phone. Each successful search also records memberships for
+matching already-registered clips. A metadata-only refresh can therefore commit
+topic classifications without adding or moving any clip slots.
+The owner's `vr-shorts-data/shorts_urls.txt` is also imported as a trusted curated
+list, without removing or reordering old entries.
+
+YouTube discovery accepts explicit `shortsLockupViewModel` or legacy
+`reelItemRenderer` entries with validated reel-watch endpoints. A `videoRenderer`
+also requires an explicit `SHORTS` overlay and a reel endpoint matching its ID.
+Ordinary search IDs, a `#shorts` title and short duration alone are insufficient.
+Known ad/promoted subtrees (`adSlotRenderer`, `adPlacements`, `playerAds`,
+`promotedVideoRenderer` and related layouts) are excluded even when they contain
+Shorts renderers. This concerns YouTube's marked platform ads; creator integrations
+inside an otherwise organic clip are not removed or skipped.
+The HTML structure is undocumented and may change or be blocked by YouTube. At
+least one valid Shorts search response is required before writing anything;
+failures are reported, malformed curated input is discarded as a whole, and an
+all-failed/empty discovery run leaves the registry unchanged. No video files are
+downloaded. This is ongoing discovery, not a guarantee of newest-first ordering
+or availability of every video in every region.
+
+Try a read-only refresh before publishing:
+
+```sh
+python refresh_catalog.py --dry-run
+```
+
+For initial topic population, run **Run workflow → full_scan = true**, or:
+
+```sh
+python refresh_catalog.py --full-scan --max-additions 200
+```
+
+This explicit manual mode scans all 27 topics and caps new clips at 200. Without
+that mode a refresh still scans at most 8 queries and appends at most 20 clips.
+Classifications and new IDs are written atomically in the same registry document.
+
+Without `--dry-run` the command appends validated new IDs using an atomic file
+replacement. Existing slots are never recycled, including unavailable videos.
+At 8192 entries it cannot add more clips, but may continue classifying existing
+ones. A full catalog with no new associations reports `capacity_reached`; raising
+the slot limit requires a matching client URL pool. Concurrent refresh
+runs are serialized. A competing Git push causes a normal push rejection rather
+than rebasing/remapping IDs or force-pushing; the next run starts from current main.
+GitHub schedules are best effort, so an exact hourly start time is not guaranteed.
+Run results and source errors are visible in the Actions job summary.
 
 ## Deployment
 

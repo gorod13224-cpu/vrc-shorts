@@ -9,9 +9,10 @@ from urllib.parse import parse_qs, urlsplit
 
 
 CATALOG_VERSION = 1
-SLOT_CAPACITY = 1024
+SLOT_CAPACITY = 8192
 REGISTRY_PATH = Path(__file__).with_name("clips.json")
 VIDEO_ID = re.compile(r"[A-Za-z0-9_-]{11}\Z")
+TOPIC_ID = re.compile(r"q(?:0|[1-9][0-9]*)\Z")
 YOUTUBE_HOSTS = {"youtube.com", "www.youtube.com", "m.youtube.com"}
 
 
@@ -46,12 +47,35 @@ def validate_clips(clips):
     return clips
 
 
-def load_registry(path=REGISTRY_PATH):
-    with Path(path).open(encoding="utf-8") as source:
-        registry = json.load(source)
+def validate_registry_document(registry):
+    """Validate stable clips and optional associations without dropping other metadata."""
     if not isinstance(registry, dict) or type(registry.get("version")) is not int or registry["version"] != CATALOG_VERSION:
         raise ValueError("Unsupported clip registry version")
-    return validate_clips(registry.get("clips"))
+    clips = validate_clips(registry.get("clips"))
+    if "clip_topics" in registry:
+        associations = registry["clip_topics"]
+        if not isinstance(associations, dict):
+            raise ValueError("clip_topics must map registered video IDs to topic lists")
+        known = set(clips)
+        for clip, topics in associations.items():
+            if not isinstance(clip, str) or clip not in known:
+                raise ValueError("clip_topics contains an unregistered video ID")
+            if (not isinstance(topics, list)
+                    or any(not isinstance(topic, str) or not TOPIC_ID.fullmatch(topic) for topic in topics)):
+                raise ValueError("Each clip_topics value must be a list of stable topic IDs (q0, q1, ...)")
+            if len(topics) != len(set(topics)):
+                raise ValueError("A clip may contain each stable topic ID only once")
+    return registry
+
+
+def load_registry_document(path=REGISTRY_PATH):
+    with Path(path).open(encoding="utf-8") as source:
+        registry = json.load(source)
+    return validate_registry_document(registry)
+
+
+def load_registry(path=REGISTRY_PATH):
+    return load_registry_document(path)["clips"]
 
 
 def append_urls(existing, lines):
@@ -76,8 +100,16 @@ def append_urls(existing, lines):
 
 
 def write_registry(path, clips):
-    """Replace only a complete, validated registry; a failed import keeps the old file."""
-    registry = {"version": CATALOG_VERSION, "clips": validate_clips(clips)}
+    """Replace the clip list while retaining existing associations and other metadata."""
+    path = Path(path)
+    registry = load_registry_document(path) if path.exists() else {"version": CATALOG_VERSION}
+    registry["clips"] = validate_clips(clips)
+    write_registry_document(path, registry)
+
+
+def write_registry_document(path, document):
+    """Atomically replace a complete, validated document; failure keeps the old file."""
+    registry = validate_registry_document(document)
     path = Path(path)
     temporary = None
     try:

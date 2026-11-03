@@ -1,0 +1,66 @@
+name: Refresh Shorts catalog
+
+on:
+  schedule:
+    - cron: '23 * * * *'
+  workflow_dispatch:
+    inputs:
+      full_scan:
+        description: 'Scan all topics and append up to 200 clips (initial backfill)'
+        required: false
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+defaults:
+  run:
+    shell: bash
+
+concurrency:
+  group: shorts-catalog-refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    if: github.repository == 'gorod13224-cpu/vrc-shorts' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install and verify
+        run: |
+          python -m pip install -r requirements.txt
+          python -m unittest discover -s tests -v
+      - name: Discover Shorts and update topic memberships
+        env:
+          FULL_SCAN: ${{ inputs.full_scan || false }}
+        run: |
+          if [[ "$FULL_SCAN" == 'true' ]]; then
+            python refresh_catalog.py --full-scan --max-additions 200 | tee "$RUNNER_TEMP/shorts-refresh.json"
+          else
+            python refresh_catalog.py | tee "$RUNNER_TEMP/shorts-refresh.json"
+          fi
+          printf '```json\n' >> "$GITHUB_STEP_SUMMARY"
+          cat "$RUNNER_TEMP/shorts-refresh.json" >> "$GITHUB_STEP_SUMMARY"
+          printf '\n```\n' >> "$GITHUB_STEP_SUMMARY"
+      - name: Publish changed registry
+        env:
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+        run: |
+          if git diff --quiet -- clips.json; then
+            echo "No new slots; no commit needed."
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- clips.json
+          git commit -m 'Refresh Shorts catalog'
+          git push origin "HEAD:refs/heads/$DEFAULT_BRANCH"

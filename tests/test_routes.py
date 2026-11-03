@@ -1,9 +1,10 @@
 import concurrent.futures
 import unittest
-from unittest.mock import Mock, patch
+from unittest.mock import patch
 
 import main
 from catalog import load_registry
+from refresh_catalog import Topic
 
 
 class FeedRouteTests(unittest.TestCase):
@@ -11,17 +12,23 @@ class FeedRouteTests(unittest.TestCase):
         self.client = main.app.test_client()
 
     def test_catalog_has_exact_contiguous_slot_count_and_no_cache(self):
-        with patch("main.requests.get") as external:
+        with patch("requests.sessions.Session.request") as external:
             response = self.client.get("/catalog.json")
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.get_json(), {"version": 1, "count": len(load_registry())})
+        data = response.get_json()
+        self.assertEqual((data["version"], data["count"]), (1, len(load_registry())))
+        self.assertEqual([topic["id"] for topic in data["topics"]], [f"q{i}" for i in range(27)])
+        for topic in data["topics"]:
+            self.assertTrue(topic["name"])
+            self.assertEqual(topic["clips"], sorted(set(topic["clips"])))
+            self.assertTrue(all(type(slot) is int and 0 <= slot < data["count"] for slot in topic["clips"]))
         self.assertGreater(response.get_json()["count"], 0)
         self.assertEqual(response.headers["Cache-Control"], "no-store")
         external.assert_not_called()
 
     def test_stable_slots_redirect_to_registered_video_without_external_lookup(self):
         ids = load_registry()
-        with patch("main.requests.get") as external:
+        with patch("requests.sessions.Session.request") as external:
             for slot in (0, len(ids) - 1, 0):
                 response = self.client.get(f"/clip/{slot}")
                 self.assertEqual(response.status_code, 302)
@@ -46,7 +53,7 @@ class FeedRouteTests(unittest.TestCase):
                 response = client.get(f"/clip/{slot}")
                 return slot, response.status_code, response.headers["Location"]
 
-        with patch("main.requests.get") as external:
+        with patch("requests.sessions.Session.request") as external:
             with concurrent.futures.ThreadPoolExecutor(max_workers=8) as pool:
                 results = list(pool.map(request_clip, range(40)))
         for slot, status, location in results:
@@ -54,20 +61,28 @@ class FeedRouteTests(unittest.TestCase):
             self.assertEqual(location, f"https://www.youtube.com/watch?v={main.CLIP_IDS[slot]}")
         external.assert_not_called()
 
-    def test_legacy_random_endpoint_still_redirects_youtube_search_result(self):
-        page = Mock(text='{"videoId":"AAAAAAAAAAA"}{"videoId":"too-short"}')
-        with patch("main.requests.get", return_value=page) as search:
+    def test_legacy_random_endpoint_uses_local_catalog_without_network(self):
+        selected = main.CLIP_IDS[0]
+        with patch("requests.sessions.Session.request") as external, patch("main.random.choice", return_value=selected):
             response = self.client.get("/shorts?v=2&i=0")
         self.assertEqual(response.status_code, 302)
-        self.assertEqual(response.headers["Location"], "https://www.youtube.com/watch?v=AAAAAAAAAAA")
+        self.assertEqual(response.headers["Location"], f"https://www.youtube.com/watch?v={selected}")
         self.assertEqual(response.headers["Cache-Control"], "no-store")
-        search.assert_called_once()
+        external.assert_not_called()
 
-    def test_legacy_endpoint_preserves_existing_fallback(self):
-        with patch("main.requests.get", side_effect=main.requests.Timeout):
+    def test_empty_catalog_returns_unavailable_without_unrelated_fallback_video(self):
+        with patch("main.CLIP_IDS", ()):
             response = self.client.get("/shorts?v=2")
-        self.assertEqual(response.status_code, 302)
-        self.assertEqual(response.headers["Location"], "https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+        self.assertEqual(response.status_code, 503)
+        self.assertNotIn("Location", response.headers)
+
+    def test_topics_keep_stable_slots_and_empty_topics_do_not_fall_back_to_all(self):
+        document = {"clips": ["AAAAAAAAAAA", "BBBBBBBBBBB", "CCCCCCCCCCC"],
+                    "clip_topics": {"BBBBBBBBBBB": ["q0", "q1"], "AAAAAAAAAAA": ["q1"]}}
+        result = main.build_topic_catalog(document, [Topic("q0", "one", "one"), Topic("q1", "two", "two"), Topic("q2", "empty", "empty")])
+        self.assertEqual(result, [{"id": "q0", "name": "one", "clips": [1]},
+                                  {"id": "q1", "name": "two", "clips": [0, 1]},
+                                  {"id": "q2", "name": "empty", "clips": []}])
 
 
 if __name__ == "__main__":
