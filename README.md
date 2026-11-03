@@ -33,6 +33,12 @@ changes. Once a world reserves the full pool, new entries within that capacity
 only need a backend deployment. Importing a data-file edit is intentional; the
 server does not silently remap slots from a mutable remote text file.
 
+## Deployment
+
+Vercel uses its native Flask integration and detects the `app` in `main.py`.
+Flask handles the original request paths. Do not add a catch-all rewrite to
+`main.py`: it replaces the path and makes the application routes return 404.
+
 ## Local verification
 
 ```sh
